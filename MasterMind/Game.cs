@@ -11,7 +11,7 @@ namespace MasterMind
         public static bool Start()
         {
             var checkGuess = new GuessChecker(GenerateSecret());
-            Console.WriteLine($"{Environment.NewLine}Secret Code Generated. Start your guesses.");
+            Console.WriteLine(Environment.NewLine + "Secret Code Generated. Start your guesses.");
 
             for (int i = 9; i >= 0; i--)
             {
