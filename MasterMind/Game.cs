@@ -2,8 +2,12 @@
 
 namespace MasterMind
 {
-    public class Game
+    public static class Game
     {
+        /// <summary>
+        /// Main game method that generates the secret code and checks each user guess to the secret code.
+        /// </summary>
+        /// <returns>True if user guesses correctly, false if all 10 guesses were incorrect.</returns>
         public static bool Start()
         {
             var checkGuess = new GuessChecker(GenerateSecret());
@@ -15,6 +19,7 @@ namespace MasterMind
 
                 var guess = Console.ReadLine();
                 bool isValidGuess = ValidateGuess(guess!, out int[] validGuess);
+
                 if (isValidGuess)
                 {
                     var isCorrect = GuessCheckerResult(checkGuess, validGuess);
@@ -30,6 +35,10 @@ namespace MasterMind
             return false;
         }
 
+        /// <summary>
+        /// Generate the secret code
+        /// </summary>
+        /// <returns>4 digit array with distinct values between 1 and 6</returns>
         public static int[] GenerateSecret()
         {
             var secret = new int[4];
@@ -43,6 +52,14 @@ namespace MasterMind
             }
             return secret;
         }
+
+        /// <summary>
+        /// Validates the user input a 4 digit number and then uses a regular expression pattern to
+        /// check that the string is a number and is between 1 and 6.
+        /// </summary>
+        /// <param name="guess"></param>
+        /// <param name="validGuess"></param>
+        /// <returns>True if guess is a valid number, otherwise false</returns>
         public static bool ValidateGuess(string guess, out int[] validGuess)
         {
             validGuess = new int[4];
@@ -61,11 +78,18 @@ namespace MasterMind
             }
             return isValidGuess;
         }
+
+        /// <summary>
+        /// Compares user guess to the secret
+        /// </summary>
+        /// <param name="checkGuess"></param>
+        /// <param name="guess"></param>
+        /// <returns>True if guess matches secret code, otherwise false (will also print +/- combination when guessed incorrectly)</returns>
         private static bool GuessCheckerResult(GuessChecker checkGuess, int[] guess)
         {
             var result = checkGuess.CheckGuess(guess);
 
-            if (result.Equals("Right!"))
+            if (result.Equals("++++"))
             {
                 return true;
             }
